@@ -8,10 +8,11 @@ on:
 jobs:
   prettier:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v2
-      - run: cd frontend/
-        name: cd into frontend dir
       - uses: actions/setup-node@v3
         with:
           node-version: "lts/gallium"
