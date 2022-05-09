@@ -24,10 +24,7 @@ jobs:
           separator: '\n'
       - name: 'Commit-back changes'
         if: steps.changes.outputs.changed_files != ''
-        uses: swinton/commit@v2.0.0
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions-x/commit@v5
         with:
-          files: ${{ steps.changes.outputs.changed_files }}
-          commit-message: 'Format files with Prettier'
-          ref: ${{ github.head_ref }}
+          name: github-actions
+          message: Format Files with Prettier
