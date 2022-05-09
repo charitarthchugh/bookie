@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: cd frontend/
         name: cd into frontend dir
-      - uses: actions/setup-node
+      - uses: actions/setup-node@v3
         with:
           node-version: "lts/gallium"
           cache: "npm"
