@@ -17,14 +17,36 @@ jobs:
         uses: actionsx/prettier@v2
         with:
           args: -w frontend/
-      - name: 'Get changed files'
+      - name: "Get changed files"
         id: changes
         uses: tj-actions/verify-changed-files@v8.8
         with:
           separator: '\n'
-      - name: 'Commit-back changes'
+      - name: "Commit-back changes"
         if: steps.changes.outputs.changed_files != ''
         uses: actions-x/commit@v5
         with:
           name: github-actions
           message: Format Files with Prettier
+  black:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./blackend
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+        with:
+          options: "--verbose"
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v18.7
+        with:
+          files: |
+            *.py
+      - name: Commit
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions-x/commit@v5
+        with:
+          name: github-actions
+          message: Format Files with Black
