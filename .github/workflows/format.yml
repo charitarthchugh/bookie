@@ -17,14 +17,17 @@ jobs:
         uses: actionsx/prettier@v2
         with:
           args: -w frontend/
-      - name: Get Changed Files 
-        id: changed-files
-        uses: tj-actions/changed-files@v18.7
-      - name: Commit Files
+      - name: 'Get changed files'
+        id: changes
+        uses: tj-actions/verify-changed-files@v8.8
+        with:
+          separator: '\n'
+      - name: 'Commit-back changes'
+        if: steps.changes.outputs.changed_files != ''
         uses: swinton/commit@v2.0.0
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ steps.changed-files.outputs.all_changed_files }}
-          commit-message: Format Files with Prettier
-          ref: refs/head/develop
+          files: ${{ steps.changes.outputs.changed_files }}
+          commit-message: 'Format files with Prettier'
+          ref: ${{ github.head_ref }}
