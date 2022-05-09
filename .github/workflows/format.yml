@@ -1,0 +1,33 @@
+name: Format Code
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd frontend/
+        name: cd into frontend dir
+      - uses: actions/setup-node
+        with:
+          node-version: "lts/gallium"
+          cache: "npm"
+      - run: npm i -D
+        name: Install node dev dependencies
+      - run: node_modules/.bin/prettier . -w
+      - name: Get Changed Files 
+        id: changed-files
+        uses: tj-actions/changed-files@v18.7
+      - name: Commit Files
+        if: steps.changed.files.outputs.any_changed == 'true'
+        uses: swinton/commit@v2 
+        env:
+          GH_TOKEN: ${{github.token}}
+        with:
+          files: ${{ steps.changed-files.outputs.all_changed_files }}
+          commit-message: Format Files with Prettier
+          ref: refs/head/develop
