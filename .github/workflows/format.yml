@@ -23,7 +23,7 @@ jobs:
       - name: Commit Files
         uses: swinton/commit@v2.0.0
         env:
-          GH_TOKEN: ${{github.token}}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: ${{ steps.changed-files.outputs.all_changed_files }}
           commit-message: Format Files with Prettier
