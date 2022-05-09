@@ -24,7 +24,7 @@ jobs:
         uses: tj-actions/changed-files@v18.7
       - name: Commit Files
         if: steps.changed.files.outputs.any_changed == 'true'
-        uses: swinton/commit@v2 
+        uses: swinton/commit@v2.0.0
         env:
           GH_TOKEN: ${{github.token}}
         with:
