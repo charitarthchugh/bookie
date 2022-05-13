@@ -13,10 +13,10 @@ jobs:
         working-directory: ./frontend
     steps:
       - uses: actions/checkout@v2
-      - name: Format Files with Prettier
-        uses: actionsx/prettier@v2
-        with:
-          args: -w frontend/
+      - name: Install Flutter
+        uses: britannio/action-install-flutter@v1.1
+      - name: Format Files with flutter format 
+        run: flutter format .
       - name: "Get changed files"
         id: changes
         uses: tj-actions/verify-changed-files@v8.8
@@ -27,7 +27,7 @@ jobs:
         uses: actions-x/commit@v5
         with:
           name: github-actions
-          message: Format Files with Prettier
+          message: Format Files with Flutter
   black:
     runs-on: ubuntu-latest
     defaults:
