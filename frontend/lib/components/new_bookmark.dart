@@ -22,7 +22,7 @@ class NewBookmark extends StatelessWidget {
               color: NordColors.snowStorm.lightest,
             ),
             Padding(
-              padding: const EdgeInsets.only(left:8.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: Text(
                 "New",
                 style: GoogleFonts.getFont("Poppins",
