@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "backend"
+name = "bookie-backend"
 version = "0.1.0"
 description = "The API Backend for bookie"
 authors = ["charitarthchugh <37895518+charitarthchugh@users.noreply.git>"]
@@ -9,7 +9,7 @@ license = "MIT"
 python = "^3.9"
 
 [tool.poetry.dev-dependencies]
-black = {extras = ["d"], version = "^22.3.0"}
+black = { extras = ["d"], version = "^22.3.0" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
