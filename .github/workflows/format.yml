@@ -38,7 +38,7 @@ jobs:
         with:
           options: --verbose
       - name: Run isort format
-        uses: isort/isort@master
+        uses: isort/isort-action@master
         with:
           configuration: --profile black
       - id: changed-files
