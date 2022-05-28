@@ -1,0 +1,1 @@
+from bookie_backend import __version__

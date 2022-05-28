@@ -1,11 +1,10 @@
 from pathlib import Path
 from typing import Any, Union
 
-from bookie_backend import __version__, bookmark_parser
+from bookie_backend import  bookmark_parser
 
 
-def test_version():
-    assert __version__ == "0.1.0"
+
 
 
 def test_parser_1():
