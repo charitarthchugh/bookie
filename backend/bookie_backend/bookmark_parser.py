@@ -4,34 +4,32 @@ from typing import Union
 from bs4 import BeautifulSoup, PageElement, element
 
 
-def get_parent_folder_tag(
-    a_tag: Union[PageElement, element.Tag]
-) -> Union[PageElement, element.Tag]:
-    # Iterate to get to a dl
-    # Previous sibling of a dl is an h3
-    current_tag = a_tag
-    while current_tag.name != "dl":
-        current_tag = current_tag.parent
-    outer = current_tag.previous_sibling
-    outer_prev_sibling = [
-        sibling for sibling in outer.previous_siblings if not sibling == "\n"
-    ][0]
-    return outer_prev_sibling
-
-
-def get_path(h3_tag: Union[element.Tag, PageElement]) -> str:
-    path_folder: list[str] = [h3_tag.string]
-
-    parent_folder = h3_tag
-    while parent_folder.name != "h1":
-        parent_folder = get_parent_folder_tag(parent_folder)
-        path_folder.append(parent_folder.string)
-    return "/".join(reversed(path_folder))[1:]
-
-
 def read(
     bookmarks: Path,
 ) -> dict[str, Union[list[str], list[dict[str, Union[str, int]]]]]:
+    def get_parent_folder_tag(
+        a_tag: Union[PageElement, element.Tag]
+    ) -> Union[PageElement, element.Tag]:
+        # Iterate to get to a dl
+        # Previous sibling of a dl is an h3
+        current_tag = a_tag
+        while current_tag.name != "dl":
+            current_tag = current_tag.parent
+        outer = current_tag.previous_sibling
+        outer_prev_sibling = [
+            sibling for sibling in outer.previous_siblings if not sibling == "\n"
+        ][0]
+        return outer_prev_sibling
+
+    def get_path(h3_tag: Union[element.Tag, PageElement]) -> str:
+        path_folder: list[str] = [h3_tag.string]
+
+        parent_folder = h3_tag
+        while parent_folder.name != "h1":
+            parent_folder = get_parent_folder_tag(parent_folder)
+            path_folder.append(parent_folder.string)
+        return "/".join(reversed(path_folder))[1:]
+
     with open(bookmarks) as file:
         soup = BeautifulSoup(file, "html.parser")
     soup.h1.string = ""
