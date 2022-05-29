@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "bookie-backend"
+name = "bookie_backend"
 version = "0.1.0"
 description = "The API Backend for bookie"
 authors = ["charitarthchugh <37895518+charitarthchugh@users.noreply.git>"]
@@ -7,10 +7,22 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+typer = "^0.4.1"
+beautifulsoup4 = "^4.11.1"
+
 
 [tool.poetry.dev-dependencies]
 black = { extras = ["d"], version = "^22.3.0" }
+pytest = "^6.2.5"
+httpie = "^3.2.1"
+pylint = "^2.13.9"
+
+[tool.poetry.scripts]
+bookie = "bookie_backend:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
