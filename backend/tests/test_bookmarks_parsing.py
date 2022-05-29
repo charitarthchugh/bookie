@@ -1,10 +1,7 @@
 from pathlib import Path
 from typing import Any, Union
 
-from bookie_backend import  bookmark_parser
-
-
-
+from bookie_backend import bookmark_parser
 
 
 def test_parser_1():
@@ -45,7 +42,6 @@ def test_parser_1():
                 "name": "lxml - Processing XML and HTML with Python",
                 "url": "https://lxml.de/",
                 "path": "Python/parse",
-        
                 "added": 1652716410,
             },
             {
