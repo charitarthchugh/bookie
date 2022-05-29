@@ -16,6 +16,8 @@ black = { extras = ["d"], version = "^22.3.0" }
 pytest = "^6.2.5"
 httpie = "^3.2.1"
 pylint = "^2.13.9"
+isort = "^5.10.1"
+
 
 [tool.poetry.scripts]
 bookie = "bookie_backend:main"
