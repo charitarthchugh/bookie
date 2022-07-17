@@ -8,6 +8,10 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 bs4 = "^0.0.1"
+fastapi = "^0.79.0"
+SQLAlchemy = "^1.4.39"
+pydantic = "^1.9.1"
+uvicorn = "^0.18.2"
 
 
 [tool.poetry.dev-dependencies]
