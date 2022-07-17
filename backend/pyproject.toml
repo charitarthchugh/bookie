@@ -7,14 +7,11 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-typer = "^0.4.1"
-beautifulsoup4 = "^4.11.1"
 
 
 [tool.poetry.dev-dependencies]
 black = { extras = ["d"], version = "^22.3.0" }
 pytest = "^6.2.5"
-httpie = "^3.2.1"
 pylint = "^2.13.9"
 isort = "^5.10.1"
 
