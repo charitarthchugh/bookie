@@ -8,7 +8,8 @@ from bookie_backend.data.models import Base
 from bookie_backend.deamon import app, get_db
 
 path = Path("test.sqlite")
-path.unlink()
+if path.exists():
+    path.unlink()
 path.touch()
 
 engine = create_engine(f"sqlite:///{path}", connect_args={"check_same_thread": False})
