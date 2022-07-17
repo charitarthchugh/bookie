@@ -7,6 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+bs4 = "^0.0.1"
 
 
 [tool.poetry.dev-dependencies]
@@ -14,6 +15,7 @@ black = { extras = ["d"], version = "^22.3.0" }
 pytest = "^6.2.5"
 pylint = "^2.13.9"
 isort = "^5.10.1"
+httpie = "^3.2.1"
 
 
 [tool.poetry.scripts]
