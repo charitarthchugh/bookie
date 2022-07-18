@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 from bookie_backend.data.models import Base
 from bookie_backend.deamon import app, get_db
+from bookie_backend.utils import bookmark_parser
 
 path = Path("test.sqlite")
 if path.exists():
@@ -66,3 +67,53 @@ def test_add_bookmark():
         "added": 1658014511,
         "id": 1,
     }
+
+
+def test_add_subfolder():
+    response = client.post("/folder/", json={"path": "test/testing"})
+    data = response.json()
+    assert (
+        response.status_code == 201
+        and data["path"] == "test/testing"
+        and isinstance(data["id"], int)
+    )
+
+
+def test_add_nested_bookmark():
+    bkmrk = {
+        "url": "https://example.com",
+        "path": "test/testing",
+        "name": "Example Domain",
+        "description": "",
+        "added": "1658014511",
+    }
+    response = client.post("/bookmark/", json=bkmrk)
+    data = response.json()
+    print(data)
+    assert response.status_code == 201 and data == {
+        "url": "https://example.com",
+        "path": "test/testing",
+        "name": "Example Domain",
+        "description": "",
+        "added": 1658014511,
+        "id": 2,
+    }
+
+
+def test_try_add_existing_folder():
+    response = client.post("/folder/", json={"path": "test"})
+    data = response.json()
+    assert response.status_code == 409 and data == {"detail": "Folder already exists"}
+
+
+def test_try_add_existing_bookmark():
+    bkmrk = {
+        "url": "https://example.org",
+        "path": "test",
+        "name": "Example Domain",
+        "description": "",
+        "added": "1658014511",
+    }
+    response = client.post("/bookmark/", json=bkmrk)
+    data = response.json()
+    assert response.status_code == 409 and data == {"detail": "Bookmark already exists"}
