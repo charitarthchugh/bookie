@@ -15,7 +15,6 @@ def get_bookmark_by_url(db: Session, bookmark_url: str):
 
 
 def create_bookmark(db: Session, bookmark: schemas.BookmarkCreate) -> models.Bookmark:
-    # folder = get_folder_by_path(db, bookmark.path)
     db_bookmark = models.Bookmark(
         name=bookmark.name,
         description=bookmark.description,
