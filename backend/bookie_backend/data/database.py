@@ -7,6 +7,8 @@ from sqlalchemy.orm import relation, relationship, sessionmaker
 
 home = os.environ["HOME"]
 path = Path(f"{home}/.local/share/bookie/bookie.sqlite")
+if not path.exists():
+    path.touch()
 SQLITE_DB_URL = f"sqlite:///{path}"
 
 engine = create_engine(SQLITE_DB_URL, connect_args={"check_same_thread": False})
