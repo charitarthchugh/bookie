@@ -3,8 +3,8 @@ from typing import Optional
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
-from bookie_backend.data import crud, models, schemas
-from bookie_backend.data.database import SessionLocal
+from .data import crud, models, schemas
+from .data.database import SessionLocal
 
 app = FastAPI(title="Bookie Bookmark API")
 
