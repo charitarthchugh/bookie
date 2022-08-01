@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from bookie_backend.data.database import Base, engine
+from .database import Base, engine
 
 """Database Models"""
 

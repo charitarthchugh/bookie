@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Union
 
-from bookie_backend.utils import bookmark_parser
+from bookie_backend.bookied.utils import bookmark_parser
 
 
 def test_parser_1():

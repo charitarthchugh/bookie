@@ -24,7 +24,7 @@ httpie = "^3.2.1"
 
 
 [tool.poetry.scripts]
-bookie = "bookie_backend:main"
+bookie = "bookie_backend.bookie:main"
 
 
 [build-system]

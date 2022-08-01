@@ -3,7 +3,7 @@ from typing import Any, Union
 from sqlalchemy.orm import Query, Session, session
 from sqlalchemy.sql.functions import mode
 
-from bookie_backend.data import models, schemas
+from . import models, schemas
 
 
 def get_bookmark(db: Session, bookmark_id: int) -> Any:
