@@ -1,12 +1,14 @@
 from typing import Optional
 
+import uvicorn
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
+from starlette.types import ASGIApp
 
 from .data import crud, models, schemas
 from .data.database import SessionLocal
 
-app = FastAPI(title="Bookie Bookmark API")
+app: ASGIApp = FastAPI(title="Bookie Bookmark API")
 
 
 def get_db():
@@ -82,3 +84,7 @@ async def post_bookmark(
     if not crud.get_folder_by_path(db, bookmark.path):
         raise HTTPException(400, detail="Create Folder First")
     return crud.create_bookmark(db, bookmark)
+
+
+def main():
+    uvicorn.run(app, port=2050)
