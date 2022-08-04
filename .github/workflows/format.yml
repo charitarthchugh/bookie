@@ -2,7 +2,8 @@ name: Format Code
 on:
   push:
     branches:
-      - develop
+      - develop*
+
 jobs:
   flutter:
     defaults:
@@ -24,7 +25,7 @@ jobs:
         name: Commit-back changes
         uses: actions-x/commit@v5
         with:
-          message: Format Files with Flutter
+          message: "style(backend): format files with flutter"
           name: github-actions
   python:
     defaults:
@@ -50,5 +51,5 @@ jobs:
         name: Commit
         uses: actions-x/commit@v5
         with:
-          message: Format Files with Black
+          message: "style(backend): format files with isort and black"
           name: github-actions
