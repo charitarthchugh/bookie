@@ -1,9 +1,9 @@
 import typer
 
-from bookie_backend.bookie.daemon import app
+from bookie_backend.bookie import daemon 
 
 app = typer.Typer()
-app.add_typer(app, name="daemon")
+app.add_typer(daemon.app, name="daemon")
 
-# if __name__ == "__main__":
-#     app()
+if __name__ == "__main__":
+    app()
