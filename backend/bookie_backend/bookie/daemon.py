@@ -10,7 +10,7 @@ from rich import print
 
 app = typer.Typer()
 
-BOOKIED_PATH = shutil.which("bookied")
+BOOKIED_PATH = str(shutil.which("bookied"))
 
 
 def _get_bookied_process() -> Optional[psutil.Process]:
@@ -25,13 +25,13 @@ def start() -> None:
     proc = _get_bookied_process()
     if proc:
         print("[bold red] Another instance of bookie deamon is running!")
-        typer.Exit()
+        raise typer.Exit(1)
     try:
         subprocess.Popen([BOOKIED_PATH])
         print("[green] bookie deamon started sucessfully")
     except subprocess.CalledProcessError:
         print("[bold red] The deamon was not able to be started sucessfully")
-        typer.Exit(1)
+        raise typer.Exit(1)
 
 
 @app.command()
@@ -40,7 +40,7 @@ def stop() -> None:
     proc = _get_bookied_process()
     if not proc:
         print("[red] No instances of bookie deamon running!")
-        typer.Exit()
+        raise typer.Exit(1)
 
     proc.kill()
     print("[yellow] bookie deamon stopped sucessfully")
