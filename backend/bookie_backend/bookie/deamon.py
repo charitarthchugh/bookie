@@ -39,7 +39,7 @@ def stop() -> None:
     """Stop a currently running daemon process"""
     proc = _get_bookied_process()
     if not proc:
-        print("[] No instances of bookie deamon running!")
+        print("[red] No instances of bookie deamon running!")
         typer.Exit()
 
     proc.kill()
