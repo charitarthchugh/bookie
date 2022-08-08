@@ -24,13 +24,13 @@ def start() -> None:
     """Attempt to start the deamon"""
     proc = _get_bookied_process()
     if proc:
-        print("[bold red] Another instance of bookie deamon is running!")
+        print("[bold red] Another instance of bookie daemon is running!")
         raise typer.Exit(1)
     try:
         subprocess.Popen([BOOKIED_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print("[green] bookie deamon started sucessfully")
+        print("[green] bookie daemon started sucessfully")
     except subprocess.CalledProcessError:
-        print("[bold red] The deamon was not able to be started sucessfully")
+        print("[bold red] The daemon was not able to be started sucessfully")
         raise typer.Exit(1)
 
 
@@ -39,11 +39,11 @@ def stop() -> None:
     """Stop a currently running daemon process"""
     proc = _get_bookied_process()
     if not proc:
-        print("[red] No instances of bookie deamon running!")
+        print("[red] No instances of bookie daemon running!")
         raise typer.Exit(1)
 
     proc.kill()
-    print("[yellow] bookie deamon stopped sucessfully")
+    print("[yellow] bookie daemon stopped sucessfully")
 
 
 @app.command()
