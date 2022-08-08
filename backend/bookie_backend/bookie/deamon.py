@@ -20,7 +20,7 @@ def _get_bookied_process() -> Optional[psutil.Process]:
 
 
 @app.command()
-def start():
+def start() -> None:
     """Attempt to start the deamon"""
     proc = _get_bookied_process()
     if proc:
@@ -31,23 +31,27 @@ def start():
         print("[green] bookie deamon started sucessfully")
     except subprocess.CalledProcessError:
         print("[bold red] The deamon was not able to be started sucessfully")
+        typer.Exit(1)
 
 
 @app.command()
-def stop():
+def stop() -> None:
+    """Stop a currently running daemon process"""
     proc = _get_bookied_process()
     if not proc:
-        print("[yellow] No instances of bookie deamon running!")
+        print("[] No instances of bookie deamon running!")
         typer.Exit()
 
     proc.kill()
-    print("[red] bookie deamon stopped sucessfully")
+    print("[yellow] bookie deamon stopped sucessfully")
 
 
 @app.command()
-def restart():
+def restart() -> None:
+    """Restart the daemon"""
     stop()
     start()
+
 
 if __name__ == "__main__":
     app()
