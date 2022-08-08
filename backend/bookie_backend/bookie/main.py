@@ -1,10 +1,9 @@
-import subprocess
-
-import deamon
 import typer
 
-app = typer.Typer()
-app.add_typer(deamon.app, name="deamon")
+from bookie_backend.bookie.daemon import app
 
-if __name__ == "__main__":
-    app()
+app = typer.Typer()
+app.add_typer(app, name="daemon")
+
+# if __name__ == "__main__":
+#     app()
