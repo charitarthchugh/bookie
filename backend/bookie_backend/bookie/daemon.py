@@ -27,7 +27,7 @@ def start() -> None:
         print("[bold red] Another instance of bookie deamon is running!")
         raise typer.Exit(1)
     try:
-        subprocess.Popen([BOOKIED_PATH])
+        subprocess.Popen([BOOKIED_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         print("[green] bookie deamon started sucessfully")
     except subprocess.CalledProcessError:
         print("[bold red] The deamon was not able to be started sucessfully")
