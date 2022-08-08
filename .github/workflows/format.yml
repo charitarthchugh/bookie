@@ -2,7 +2,7 @@ name: Format Code
 on:
   push:
     branches:
-      - develop
+      - develop*
 jobs:
   flutter:
     defaults:
