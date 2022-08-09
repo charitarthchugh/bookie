@@ -1,3 +1,4 @@
+import time
 from typing import Optional
 
 import psutil
@@ -8,25 +9,33 @@ runner = CliRunner()
 
 
 def get_running_proc(proc_name: str) -> Optional[psutil.Process]:
+    """Get a currently running process
+
+    Args:
+        proc_name (str): Name of process
+
+    Returns:
+        Optional[psutil.Process]: process information
+    """
     for proc in psutil.process_iter():
         if proc.name() == proc_name:
             return proc
 
 
 def test_start():
-    output = runner.invoke(app, ["daemon", "start"])
-    assert get_running_proc("bookied")
+    out = runner.invoke(app, ["daemon", "start"])
+    assert get_running_proc("bookied") and out.exit_code == 0
 
 
 def test_restart():
-    previous_instance = get_running_proc("bookied")
-    output = runner.invoke(app, ["daemon", "restart"])
-    assert output.exit_code == 0
-    current_instance = get_running_proc("bookied")
-    assert previous_instance != current_instance
+    out = runner.invoke(app, ["daemon", "restart"])
+    assert out.exit_code == 0 and out.output.strip() == "bookie daemon stopped sucessfully\n bookie daemon started sucessfully"
 
 
 def test_stop():
-    output = runner.invoke(app, ["daemon", "stop"])
-    assert output.exit_code == 0
-    assert get_running_proc("bookied") is None
+    out = runner.invoke(app, ["daemon", "stop"])
+    assert (
+        out.output.strip() == "bookie daemon stopped sucessfully"
+        and get_running_proc("bookied").status() == "zombie" # Status is zombie because it has completed but the PID is still in memory
+        and out.exit_code == 0
+    )
