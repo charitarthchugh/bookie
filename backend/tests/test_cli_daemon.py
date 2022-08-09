@@ -2,8 +2,9 @@ import time
 from typing import Optional
 
 import psutil
-from bookie_backend.bookie.main import app
 from typer.testing import CliRunner
+
+from bookie_backend.bookie.main import app
 
 runner = CliRunner()
 
@@ -29,13 +30,18 @@ def test_start():
 
 def test_restart():
     out = runner.invoke(app, ["daemon", "restart"])
-    assert out.exit_code == 0 and out.output.strip() == "bookie daemon stopped sucessfully\n bookie daemon started sucessfully"
+    assert (
+        out.exit_code == 0
+        and out.output.strip()
+        == "bookie daemon stopped sucessfully\n bookie daemon started sucessfully"
+    )
 
 
 def test_stop():
     out = runner.invoke(app, ["daemon", "stop"])
     assert (
         out.output.strip() == "bookie daemon stopped sucessfully"
-        and get_running_proc("bookied").status() == "zombie" # Status is zombie because it has completed but the PID is still in memory
+        and get_running_proc("bookied").status()
+        == "zombie"  # Status is zombie because it has completed but the PID is still in memory
         and out.exit_code == 0
     )
