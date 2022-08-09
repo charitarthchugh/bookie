@@ -1,3 +1,4 @@
+import time
 import shutil
 import subprocess
 from typing import Optional
@@ -23,7 +24,7 @@ def _get_bookied_process() -> Optional[psutil.Process]:
 def start() -> None:
     """Attempt to start the deamon"""
     proc = _get_bookied_process()
-    if proc:
+    if proc and proc.status() != "zombie":
         print("[bold red] Another instance of bookie daemon is running!")
         raise typer.Exit(1)
     try:
