@@ -1,13 +1,11 @@
-import time
 import shutil
 import subprocess
+import time
 from typing import Optional
-
 
 import psutil
 import typer
 from rich import print
-
 
 app = typer.Typer()
 
