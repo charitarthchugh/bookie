@@ -1,6 +1,6 @@
 import typer
 
-from bookie_backend.bookie import daemon 
+from . import daemon
 
 app = typer.Typer()
 app.add_typer(daemon.app, name="daemon")
