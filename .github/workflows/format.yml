@@ -2,7 +2,7 @@ name: Format Code
 on:
   push:
     branches:
-      - develop
+      - develop*
 jobs:
   flutter:
     defaults:
@@ -15,21 +15,23 @@ jobs:
         uses: britannio/action-install-flutter@v1.1
       - name: Format Files with flutter format
         run: flutter format .
-      - id: changes
+      - id: changed-files
         name: Get changed files
-        uses: tj-actions/verify-changed-files@v8.8
+        uses: tj-actions/changed-files@v24.1
         with:
-          separator: \n
-      - if: steps.changes.outputs.changed_files != ''
+          separator: '\n'
+      - if: steps.changed-files-specific.outputs.any_modified == 'true'
         name: Commit-back changes
-        uses: actions-x/commit@v5
+        uses: swinton/commit@v2.0.0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: Format Files with Flutter
-          name: github-actions
+          files: ${{steps.changes.outputs.all_modified_files}}
+          commit-message:  "style(backend): format files with flutter"
   python:
     defaults:
       run:
-        working-directory: ./blackend
+        working-directory: ./backend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -43,12 +45,14 @@ jobs:
           configuration: --profile black
       - id: changed-files
         name: Get changed files
-        uses: tj-actions/changed-files@v18.7
+        uses: tj-actions/changed-files@v24.1
         with:
-          files: "*.py\n"
-      - if: steps.changed-files.outputs.any_changed == 'true'
-        name: Commit
-        uses: actions-x/commit@v5
+          separator: '\n'
+      - if: steps.changed-files-specific.outputs.any_modified == 'true'
+        name: Commit-back changes
+        uses: swinton/commit@v2.0.0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: Format Files with Black
-          name: github-actions
+          files: ${{steps.changes.outputs.all_modified_files}}
+          commit-message: "style(backend): format files with isort and black"
