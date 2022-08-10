@@ -34,7 +34,7 @@ class MyHomePage extends StatelessWidget {
     // than having to individually change instances of widgets.
     return Scaffold(
       body: Row(
-        children: [],
+        children: [BookieDrawer()],
       ),
     );
   }
