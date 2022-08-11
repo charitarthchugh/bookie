@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
-import 'package:frontend/components/logo.dart';
+import 'package:bookief/components/logo.dart';
 
 class BookieDrawer extends StatelessWidget {
   const BookieDrawer({Key? key}) : super(key: key);

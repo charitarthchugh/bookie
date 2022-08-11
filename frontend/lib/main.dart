@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nord_theme/flutter_nord_theme.dart';
-import 'package:frontend/components/bookie_drawer.dart';
-import 'package:frontend/components/new_bookmark.dart';
+import 'package:bookief/components/bookie_drawer.dart';
+import 'package:bookief/components/new_bookmark.dart';
 
 void main() {
   runApp(const MyApp());
