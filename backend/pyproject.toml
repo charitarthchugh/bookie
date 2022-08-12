@@ -12,6 +12,9 @@ fastapi = "^0.79.0"
 SQLAlchemy = "^1.4.39"
 pydantic = "^1.9.1"
 uvicorn = "^0.18.2"
+typer = "^0.6.1"
+rich = "^12.5.1"
+psutil = "^5.9.1"
 
 
 [tool.poetry.dev-dependencies]
@@ -23,8 +26,8 @@ httpie = "^3.2.1"
 
 
 [tool.poetry.scripts]
-bookie = "bookie_backend:main"
-
+bookie = "bookie_backend.bookie.main:app"
+bookied = "bookie_backend.bookied.deamon:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
