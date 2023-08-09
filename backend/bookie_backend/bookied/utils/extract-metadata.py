@@ -18,13 +18,20 @@ def extract_metadata(url) -> Optional[dict]:
         # Get base url
         base_url = urllib.parse.urlparse(url).hostname
         req = requests.get(f"https://favicongrabber.com/api/grab/{base_url}")
-        fav_url = req.json()["icons"][0]["src"]
-        favicon = requests.get(fav_url).content
+        icons = req.json()["icons"]
+        for icon in icons:
+            if icon["src"].endswith(".ico"):
+                fav_url = icon["src"]
+                break
+
+        if fav_url:
+            favicon = requests.get(fav_url).content
 
         return {
             "title": title.string if title else None,
             "description": description["content"] if description else None,
             "favicon": favicon if favicon else None,
+            "favicon_hash": md5(favicon),
             "url": url,
         }
     except Exception as e:
@@ -44,6 +51,7 @@ def md5(content) -> Optional[str]:
 if __name__ == "__main__":
     meta = extract_metadata("https://www.youtube.com/watch?v=9bZkp7q19f0")
     from pathlib import Path
+
     # save favicon
     favicon = meta["favicon"]
     if favicon:
