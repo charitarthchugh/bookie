@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 from pydantic.networks import HttpUrl
 
@@ -9,7 +11,8 @@ class BookmarkBase(BaseModel):
     name: str
     description: str
     added: int
-    path: str
+    parent_folder_id: int
+    icon: Optional[str] = None
 
 
 class BookmarkCreate(BookmarkBase):
@@ -23,19 +26,23 @@ class Bookmark(BookmarkBase):
     class Config:
         orm_mode = True
 
+    def __hash__(self):
+        return hash(self.id)
+
 
 class FolderBase(BaseModel):
-    path: str
+    name: str
+    parent_folder_id: int
+    bookmarks: Optional[list[Bookmark]] = []
 
 
-# For consistancy
+# For consistency
 class FolderCreate(FolderBase):
     pass
 
 
 class Folder(FolderBase):
     id: int
-    children: list[Bookmark] = []
 
     class Config:
         orm_mode = True

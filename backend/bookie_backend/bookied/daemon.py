@@ -1,12 +1,10 @@
-from typing import Optional
-
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from starlette.types import ASGIApp
 
-from .data import crud, models, schemas
-from .data.database import SessionLocal
+from bookie_backend.bookied.data import crud, models, schemas
+from bookie_backend.bookied.data.database import SessionLocal
 
 app: ASGIApp = FastAPI(title="Bookie Bookmark API")
 
@@ -63,8 +61,8 @@ async def post():
     description="Add a folder at the specified path",
 )
 async def post_folder(folder: schemas.FolderCreate, db: Session = Depends(get_db)):
-    db_folder = crud.get_folder_by_path(db, folder.path)
-    if db_folder:
+    match = [x for x in crud.get_folders_by_parent_id(db, folder.parent_folder_id) if x.name == folder.name]
+    if match:
         raise HTTPException(409, detail="Folder already exists")
     return crud.create_folder(db, folder)
 
@@ -75,14 +73,13 @@ async def post_folder(folder: schemas.FolderCreate, db: Session = Depends(get_db
     response_model=schemas.Bookmark,
 )
 async def post_bookmark(
-    bookmark: schemas.BookmarkCreate, db: Session = Depends(get_db)
+        bookmark: schemas.BookmarkCreate, db: Session = Depends(get_db)
 ):
-
     db_bookmark = crud.get_bookmark_by_url(db=db, bookmark_url=bookmark.url)
     if db_bookmark:
         raise HTTPException(409, detail="Bookmark already exists")
-    if not crud.get_folder_by_path(db, bookmark.path):
-        raise HTTPException(400, detail="Create Folder First")
+    # if not crud.get_folder_by_path(db, bookmark.path):
+    #     raise HTTPException(400, detail="Create Folder First")
     return crud.create_bookmark(db, bookmark)
 
 
