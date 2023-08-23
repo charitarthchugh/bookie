@@ -17,6 +17,12 @@ def get_db():
         db.close()
 
 
+# make sure that the root folder exists
+# f = crud.get_folder(get_db(), 1)
+with SessionLocal.begin() as db:
+    if not crud.get_folder(db, 1):
+        crud.create_folder(db, schemas.FolderCreate(name='root', parent_id=-1))
+
 """Get Requests"""
 
 
@@ -61,7 +67,7 @@ async def post():
     description="Add a folder at the specified path",
 )
 async def post_folder(folder: schemas.FolderCreate, db: Session = Depends(get_db)):
-    match = [x for x in crud.get_folders_by_parent_id(db, folder.parent_folder_id) if x.name == folder.name]
+    match = [x for x in crud.get_folders_by_parent_id(db, folder.parent_id) if x.name == folder.name]
     if match:
         raise HTTPException(409, detail="Folder already exists")
     return crud.create_folder(db, folder)

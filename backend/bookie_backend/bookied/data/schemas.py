@@ -11,7 +11,7 @@ class BookmarkBase(BaseModel):
     name: str
     description: str
     added: int
-    parent_folder_id: int
+    folder_id: int
     icon: Optional[str] = None
 
 
@@ -32,7 +32,7 @@ class Bookmark(BookmarkBase):
 
 class FolderBase(BaseModel):
     name: str
-    parent_folder_id: int
+    parent_id: int
     bookmarks: Optional[list[Bookmark]] = []
 
 

@@ -1,5 +1,7 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+from typing import Optional
+
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship, mapped_column, Mapped
 
 from .database import Base, engine
 
@@ -8,25 +10,29 @@ from .database import Base, engine
 
 class Bookmark(Base):
     __tablename__ = "bookmarks"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str]
+    url: Mapped[str] = mapped_column(unique=True)
+    description: Mapped[Optional[str]]
+    added: Mapped[int]
+    icon: Mapped[Optional[str]]
+    folder: Mapped["Folder"] = relationship(back_populates="bookmarks")
+    folder_id: Mapped[int] = mapped_column(ForeignKey('folders.id'))
 
-    id = Column(Integer, primary_key=True, index=True)
-    url = Column(String, unique=True, index=True)
-    name = Column(String)
-    description = Column(String)
-    folder = relationship("Folder", back_populates="children")
-    # path = Column(String, ForeignKey("folders.path"))
-    parent_folder_id = Column(Integer, ForeignKey("folders.id"))
-    added = Column(Integer)
-    icon = Column(String)  # name of Icon, not the icon itself
+    def __repr__(self):
+        return f"<Bookmark(name={self.name}, url={self.url}, folder={self.folder})>"
 
 
 class Folder(Base):
     __tablename__ = "folders"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True, unique=True)
-    bookmarks = relationship("Bookmark", back_populates="folder")
-    parent_folder_id = Column(Integer)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True, unique=True)
+    name: Mapped[str]
+    parent_id: Mapped[int]
+    bookmarks: Mapped[list["Bookmark"]] = relationship(back_populates="folder")
+
+    def __repr__(self):
+        return f"<Folder(name={self.name}, parent_id={self.parent_id})>"
 
 
 Base.metadata.create_all(engine)
