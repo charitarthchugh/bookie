@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from pydantic.networks import HttpUrl
 
 
@@ -23,8 +23,7 @@ class BookmarkCreate(BookmarkBase):
 class Bookmark(BookmarkBase):
     id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
     def __hash__(self):
         return hash(self.id)
@@ -44,5 +43,4 @@ class FolderCreate(FolderBase):
 class Folder(FolderBase):
     id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
